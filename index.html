@@ -36,6 +36,7 @@
     <script>
         let puntuacion = 0; // Inicializa la puntuación
         let multiplicador = 1; // Inicializa el multiplicador de clics
+        let costoUpgrade = 50; // Costo del primer upgrade
 
         function incrementar() {
             puntuacion += multiplicador; // Incrementa la puntuación según el multiplicador
@@ -43,12 +44,12 @@
         }
 
         function comprarUpgrade() {
-            if (puntuacion >= 50) { // Verifica si hay suficientes puntos
-                puntuacion -= 50; // Resta el costo del upgrade
-                multiplicador = 2; // Duplica los clics
+            if (puntuacion >= costoUpgrade) { // Verifica si hay suficientes puntos
+                puntuacion -= costoUpgrade; // Resta el costo del upgrade
+                multiplicador *= 2; // Duplica los clics
                 document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
-                document.querySelector("#upgrade button").disabled = true; // Desactiva el botón después de comprar
-                document.querySelector("#upgrade button").textContent = "Upgrade comprado!";
+                costoUpgrade *= 3; // Multiplica el costo por 3 para el siguiente upgrade
+                document.querySelector("#upgrade button").textContent = `Comprar Upgrade x${multiplicador} (${costoUpgrade} clics)`; // Actualiza el texto del botón
             } else {
                 alert("No tienes suficientes clics para comprar el upgrade.");
             }
