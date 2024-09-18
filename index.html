@@ -18,7 +18,7 @@
             width: 200px; /* Ajusta el tamaño de la imagen según sea necesario */
             cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
         }
-        #upgrade, #auto-clicker {
+        #upgrade, #auto-clicker, #mascotas {
             margin-top: 20px;
             font-size: 20px;
         }
@@ -37,6 +37,11 @@
         <button onclick="comprarAutoClicker()">Comprar Auto Clicker (150 clics)</button>
         <button onclick="mejorarAutoClicker()" disabled>Mejorar Auto Clicker (300 clics)</button>
     </div>
+    
+    <div id="mascotas">
+        <button onclick="comprarHuevo()">Comprar Huevo (500 clics)</button>
+        <div id="mascotaActual">Mascota: Ninguna</div>
+    </div>
 
     <script>
         let puntuacion = 0; // Inicializa la puntuación
@@ -47,9 +52,10 @@
         let autoClickerInterval; // Intervalo del auto clicker
         let autoClickerClicsPorSegundo = 10; // Clics por segundo inicial
         let costoAutoClickerMejora = 300; // Costo de la mejora del auto clicker
+        let mascotaMultiplicador = 1; // Multiplicador de la mascota actual
 
         function incrementar() {
-            puntuacion += multiplicador; // Incrementa la puntuación según el multiplicador
+            puntuacion += multiplicador * mascotaMultiplicador; // Incrementa la puntuación según el multiplicador y el de la mascota
             document.getElementById("contador").textContent = puntuacion; // Actualiza el contador en la página
         }
 
@@ -100,8 +106,30 @@
                 alert("No tienes suficientes clics para mejorar el Auto Clicker.");
             }
         }
+
+        function comprarHuevo() {
+            if (puntuacion >= 500) { // Verifica si hay suficientes puntos
+                puntuacion -= 500; // Resta el costo del huevo
+                document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
+                obtenerMascota(); // Llama a la función para obtener una mascota
+            } else {
+                alert("No tienes suficientes clics para comprar el huevo.");
+            }
+        }
+
+        function obtenerMascota() {
+            const mascotas = [
+                { nombre: "Mascota x1.15", multiplicador: 1.15 },
+                { nombre: "Mascota x1.20", multiplicador: 1.20 },
+                { nombre: "Mascota x1.25", multiplicador: 1.25 }
+            ];
+            const mascotaElegida = mascotas[Math.floor(Math.random() * mascotas.length)]; // Selecciona una mascota aleatoria
+            mascotaMultiplicador = mascotaElegida.multiplicador; // Actualiza el multiplicador de la mascota
+            document.getElementById("mascotaActual").textContent = `Mascota: ${mascotaElegida.nombre}`; // Muestra la mascota actual
+        }
     </script>
 </body>
 </html>
+
 
 
