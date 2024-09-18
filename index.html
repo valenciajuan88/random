@@ -30,13 +30,19 @@
     <img src="https://carter.eu/wp-content/uploads/2024/02/The-Inka-Trail-Peru-najpiekniejsze-miejsca-wycieczki-do-peru-luksusowe-wakacje-w-peru-1024x682.png" alt="Haz clic aquí!" onclick="incrementar()">
 
     <div id="upgrade">
-        <button onclick="comprarUpgrade()">Comprar Upgrade x2 (50 clics)</button>
+        <button onclick="comprarUpgrade()">Comprar Upgrade x2 (${costoUpgrade} clics)</button>
+    </div>
+    
+    <div id="auto-clicker">
+        <button onclick="comprarAutoClicker()">Comprar Auto Clicker (250 clics)</button>
     </div>
 
     <script>
         let puntuacion = 0; // Inicializa la puntuación
         let multiplicador = 1; // Inicializa el multiplicador de clics
         let costoUpgrade = 50; // Costo del primer upgrade
+        let autoClickerActivo = false; // Estado del auto clicker
+        let autoClickerInterval; // Intervalo del auto clicker
 
         function incrementar() {
             puntuacion += multiplicador; // Incrementa la puntuación según el multiplicador
@@ -54,7 +60,29 @@
                 alert("No tienes suficientes clics para comprar el upgrade.");
             }
         }
+
+        function comprarAutoClicker() {
+            if (puntuacion >= 250) { // Verifica si hay suficientes puntos
+                puntuacion -= 250; // Resta el costo del auto clicker
+                document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
+
+                // Activa el auto clicker
+                if (!autoClickerActivo) {
+                    autoClickerActivo = true;
+                    autoClickerInterval = setInterval(() => {
+                        puntuacion += 5; // Añade 5 clics por segundo
+                        document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
+                    }, 1000); // Ejecuta cada segundo
+                }
+
+                document.querySelector("#auto-clicker button").disabled = true; // Desactiva el botón después de comprar
+                document.querySelector("#auto-clicker button").textContent = "Auto Clicker comprado!";
+            } else {
+                alert("No tienes suficientes clics para comprar el Auto Clicker.");
+            }
+        }
     </script>
 </body>
 </html>
+
 
