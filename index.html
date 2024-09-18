@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector de Nombres</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        #respuesta {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selector de Nombres</h1>
+    <input type="text" id="pregunta" placeholder="Escribe tu pregunta aquí">
+    <button onclick="seleccionarNombre()">¡Pregúntame!</button>
+    <div id="respuesta"></div>
+
+    <script>
+        const nombres = ["Puertas", "Rubén", "Juan", "Jorge", "Marcos"]; // Lista de nombres
+
+        function seleccionarNombre() {
+            const pregunta = document.getElementById("pregunta").value;
+            if (pregunta) {
+                const nombreAleatorio = nombres[Math.floor(Math.random() * nombres.length)];
+                document.getElementById("respuesta").textContent = `Respuesta: ${nombreAleatorio}`;
+            } else {
+                document.getElementById("respuesta").textContent = "Por favor, escribe una pregunta.";
+            }
+        }
+    </script>
+</body>
+</html>
 
