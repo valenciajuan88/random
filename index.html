@@ -18,20 +18,42 @@
             width: 200px; /* Ajusta el tamaño de la imagen según sea necesario */
             cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
         }
+        #upgrade {
+            margin-top: 20px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Juego Clicker</h1>
+    <h1>Perú Clicker</h1>
     <div id="contador">0</div>
     <img src="https://carter.eu/wp-content/uploads/2024/02/The-Inka-Trail-Peru-najpiekniejsze-miejsca-wycieczki-do-peru-luksusowe-wakacje-w-peru-1024x682.png" alt="Haz clic aquí!" onclick="incrementar()">
 
+    <div id="upgrade">
+        <button onclick="comprarUpgrade()">Comprar Upgrade x2 (50 clics)</button>
+    </div>
+
     <script>
-        let puntuacion = 0;
+        let puntuacion = 0; // Inicializa la puntuación
+        let multiplicador = 1; // Inicializa el multiplicador de clics
 
         function incrementar() {
-            puntuacion++;
-            document.getElementById("contador").textContent = puntuacion;
+            puntuacion += multiplicador; // Incrementa la puntuación según el multiplicador
+            document.getElementById("contador").textContent = puntuacion; // Actualiza el contador en la página
+        }
+
+        function comprarUpgrade() {
+            if (puntuacion >= 50) { // Verifica si hay suficientes puntos
+                puntuacion -= 50; // Resta el costo del upgrade
+                multiplicador = 2; // Duplica los clics
+                document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
+                document.querySelector("#upgrade button").disabled = true; // Desactiva el botón después de comprar
+                document.querySelector("#upgrade button").textContent = "Upgrade comprado!";
+            } else {
+                alert("No tienes suficientes clics para comprar el upgrade.");
+            }
         }
     </script>
 </body>
 </html>
+
