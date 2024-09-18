@@ -55,7 +55,7 @@
         let mascotaMultiplicador = 1; // Multiplicador de la mascota actual
 
         function incrementar() {
-            puntuacion += multiplicador * mascotaMultiplicador; // Incrementa la puntuación según el multiplicador y el de la mascota
+            puntuacion += Math.floor(multiplicador * mascotaMultiplicador); // Incrementa la puntuación sin decimales
             document.getElementById("contador").textContent = puntuacion; // Actualiza el contador en la página
         }
 
@@ -80,7 +80,7 @@
                 if (!autoClickerActivo) {
                     autoClickerActivo = true;
                     autoClickerInterval = setInterval(() => {
-                        puntuacion += autoClickerClicsPorSegundo; // Añade clics por segundo
+                        puntuacion += Math.floor(autoClickerClicsPorSegundo); // Añade clics por segundo sin decimales
                         document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
                     }, 1000); // Ejecuta cada segundo
                 }
