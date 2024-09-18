@@ -18,7 +18,7 @@
             width: 200px; /* Ajusta el tamaño de la imagen según sea necesario */
             cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
         }
-        #upgrade {
+        #upgrade, #auto-clicker {
             margin-top: 20px;
             font-size: 20px;
         }
@@ -34,15 +34,19 @@
     </div>
     
     <div id="auto-clicker">
-        <button onclick="comprarAutoClicker()">Comprar Auto Clicker (250 clics)</button>
+        <button onclick="comprarAutoClicker()">Comprar Auto Clicker (150 clics)</button>
+        <button onclick="mejorarAutoClicker()" disabled>Mejorar Auto Clicker (300 clics)</button>
     </div>
 
     <script>
         let puntuacion = 0; // Inicializa la puntuación
         let multiplicador = 1; // Inicializa el multiplicador de clics
         let costoUpgrade = 50; // Costo del primer upgrade
+        let costoAutoClicker = 150; // Costo inicial del auto clicker
         let autoClickerActivo = false; // Estado del auto clicker
         let autoClickerInterval; // Intervalo del auto clicker
+        let autoClickerClicsPorSegundo = 10; // Clics por segundo inicial
+        let costoAutoClickerMejora = 300; // Costo de la mejora del auto clicker
 
         function incrementar() {
             puntuacion += multiplicador; // Incrementa la puntuación según el multiplicador
@@ -62,23 +66,38 @@
         }
 
         function comprarAutoClicker() {
-            if (puntuacion >= 250) { // Verifica si hay suficientes puntos
-                puntuacion -= 250; // Resta el costo del auto clicker
+            if (puntuacion >= costoAutoClicker) { // Verifica si hay suficientes puntos
+                puntuacion -= costoAutoClicker; // Resta el costo del auto clicker
                 document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
 
                 // Activa el auto clicker
                 if (!autoClickerActivo) {
                     autoClickerActivo = true;
                     autoClickerInterval = setInterval(() => {
-                        puntuacion += 5; // Añade 5 clics por segundo
+                        puntuacion += autoClickerClicsPorSegundo; // Añade clics por segundo
                         document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
                     }, 1000); // Ejecuta cada segundo
                 }
 
-                document.querySelector("#auto-clicker button").disabled = true; // Desactiva el botón después de comprar
-                document.querySelector("#auto-clicker button").textContent = "Auto Clicker comprado!";
+                document.querySelector("#auto-clicker button:nth-child(1)").disabled = true; // Desactiva el botón de compra
+                document.querySelector("#auto-clicker button:nth-child(1)").textContent = "Auto Clicker comprado!";
+                document.querySelector("#auto-clicker button:nth-child(2)").disabled = false; // Habilita el botón de mejora
+
+                costoAutoClicker *= 3; // Multiplica el costo por 3 para el siguiente auto clicker
             } else {
                 alert("No tienes suficientes clics para comprar el Auto Clicker.");
+            }
+        }
+
+        function mejorarAutoClicker() {
+            if (puntuacion >= costoAutoClickerMejora) { // Verifica si hay suficientes puntos
+                puntuacion -= costoAutoClickerMejora; // Resta el costo de mejora
+                autoClickerClicsPorSegundo *= 2; // Duplica los clics por segundo
+                document.getElementById("contador").textContent = puntuacion; // Actualiza el contador
+                costoAutoClickerMejora *= 3; // Multiplica el costo por 3 para la siguiente mejora
+                document.querySelector("#auto-clicker button:nth-child(2)").textContent = `Mejorar Auto Clicker (${costoAutoClickerMejora} clics)`; // Actualiza el texto del botón
+            } else {
+                alert("No tienes suficientes clics para mejorar el Auto Clicker.");
             }
         }
     </script>
